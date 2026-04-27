@@ -1,0 +1,159 @@
+.checkout-steps {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 0;
+}
+
+.checkout-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.step-circle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.checkout-step.active .step-circle {
+  border-color: var(--accent);
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+.checkout-step.done .step-circle {
+  border-color: var(--success);
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.checkout-step span:not(.step-circle) {
+  font-size: 14px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.checkout-step.active span:not(.step-circle) { color: var(--text-primary); font-weight: 500; }
+
+.step-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin: 0 12px;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+
+.checkout-main { display: flex; flex-direction: column; gap: 20px; }
+.checkout-section-title { font-size: 18px; font-weight: 600; margin-bottom: 24px; }
+
+.payment-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.payment-option:hover { border-color: var(--border-light); }
+.payment-option.active { border-color: var(--accent); background: var(--accent-muted); }
+.payment-option input { display: none; }
+.payment-icon { font-size: 22px; }
+.payment-label { font-size: 15px; font-weight: 500; color: var(--text-primary); flex: 1; }
+.payment-check { color: var(--accent); font-weight: 700; }
+
+.payment-note {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--info-bg);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.checkout-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* Review */
+.review-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+}
+.review-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); min-width: 80px; padding-top: 2px; }
+.review-value { flex: 1; font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+.review-items {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.review-item-img {
+  width: 52px; height: 52px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-hover);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.review-item-img img { width: 100%; height: 100%; object-fit: cover; }
+.review-item-info { flex: 1; }
+.review-item-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.review-item-qty { font-size: 12px; color: var(--text-muted); }
+.review-item-price { font-size: 15px; font-weight: 600; color: var(--accent); }
+
+/* Sidebar */
+.checkout-sidebar { position: sticky; top: 90px; }
+
+.checkout-items-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.checkout-mini-item { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--text-secondary); }
+.checkout-mini-name { flex: 1; }
+.checkout-mini-qty { color: var(--text-muted); }
+
+.summary-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); }
+.summary-total { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 4px; }
+
+@media (max-width: 900px) {
+  .checkout-layout { grid-template-columns: 1fr; }
+  .checkout-sidebar { position: static; }
+  .checkout-steps span:not(.step-circle) { display: none; }
+}

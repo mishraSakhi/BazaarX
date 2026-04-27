@@ -1,0 +1,107 @@
+{
+  "folders": [
+    { "name": "Root", "path": "." },
+    { "name": "Server", "path": "./server" },
+    { "name": "Client", "path": "./client" }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    "editor.fontSize": 14,
+    "editor.lineHeight": 1.7,
+    "editor.minimap.enabled": false,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.iconTheme": "material-icon-theme",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "files.autoSave": "onFocusChange",
+    "emmet.includeLanguages": { "javascript": "javascriptreact" },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "eslint.validate": ["javascript", "javascriptreact"],
+    "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/build": true,
+      "**/dist": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "zhuangtongfa.material-theme",
+      "pkief.material-icon-theme",
+      "mongodb.mongodb-vscode",
+      "humao.rest-client",
+      "christian-kohler.path-intellisense",
+      "formulahendry.auto-rename-tag",
+      "dsznajder.es7-react-js-snippets",
+      "streetsidesoftware.code-spell-checker",
+      "eamodio.gitlens",
+      "ms-vscode.vscode-thunder-client"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug Server",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/server/index.js",
+        "envFile": "${workspaceFolder}/server/.env",
+        "console": "integratedTerminal",
+        "restart": true
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Start Dev (Full Stack)",
+        "type": "shell",
+        "command": "npm run dev",
+        "group": { "kind": "build", "isDefault": true },
+        "presentation": { "reveal": "always", "panel": "new" },
+        "problemMatcher": []
+      },
+      {
+        "label": "Start Server Only",
+        "type": "shell",
+        "command": "cd server && npm run dev",
+        "presentation": { "reveal": "always", "panel": "new" },
+        "problemMatcher": []
+      },
+      {
+        "label": "Start Client Only",
+        "type": "shell",
+        "command": "cd client && npm start",
+        "presentation": { "reveal": "always", "panel": "new" },
+        "problemMatcher": []
+      },
+      {
+        "label": "Install All Dependencies",
+        "type": "shell",
+        "command": "npm run install-all",
+        "presentation": { "reveal": "always", "panel": "new" },
+        "problemMatcher": []
+      },
+      {
+        "label": "Seed Database",
+        "type": "shell",
+        "command": "cd server && node seed.js",
+        "presentation": { "reveal": "always", "panel": "new" },
+        "problemMatcher": []
+      }
+    ]
+  }
+}

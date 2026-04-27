@@ -1,0 +1,269 @@
+{
+  "info": {
+    "name": "BazaarX API",
+    "description": "Complete API collection for BazaarX Multi-Vendor E-commerce Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "productId", "value": "" },
+    { "key": "orderId", "value": "" },
+    { "key": "vendorId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Customer",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"test123\",\n  \"role\": \"customer\"\n}" }
+          }
+        },
+        {
+          "name": "Register Vendor",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"My Shop\",\n  \"email\": \"shop@example.com\",\n  \"password\": \"shop123\",\n  \"role\": \"vendor\",\n  \"shopName\": \"My Awesome Shop\",\n  \"category\": \"Electronics\"\n}" }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "exec": ["const res = pm.response.json();", "if(res.token) pm.collectionVariables.set('token', res.token);"] } }],
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@demo.com\",\n  \"password\": \"admin123\"\n}" }
+          }
+        },
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/me",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/auth/update-profile",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated Name\",\n  \"phone\": \"+91 9876543210\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/products?page=1&limit=12", "query": [{"key":"page","value":"1"},{"key":"limit","value":"12"}] } }
+        },
+        {
+          "name": "Get Products - Filter by Category",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/products?category=Electronics&sort=price-asc", "query": [{"key":"category","value":"Electronics"},{"key":"sort","value":"price-asc"}] } }
+        },
+        {
+          "name": "Search Products",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/products?search=headphones", "query": [{"key":"search","value":"headphones"}] } }
+        },
+        {
+          "name": "Get Single Product",
+          "request": { "method": "GET", "url": "{{baseUrl}}/products/{{productId}}" }
+        },
+        {
+          "name": "Create Product (Vendor)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/products",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"New Product\",\n  \"description\": \"Product description here\",\n  \"price\": 1999,\n  \"discountPrice\": 1499,\n  \"category\": \"Electronics\",\n  \"stock\": 50,\n  \"images\": [\"https://example.com/image.jpg\"],\n  \"tags\": [\"tag1\", \"tag2\"]\n}" }
+          }
+        },
+        {
+          "name": "Update Product (Vendor)",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/products/{{productId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"price\": 2499,\n  \"stock\": 30\n}" }
+          }
+        },
+        {
+          "name": "Delete Product (Vendor)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/products/{{productId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": { "method": "GET", "url": "{{baseUrl}}/cart", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/cart/add",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 2\n}" }
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/cart/update/{{productId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"quantity\": 3 }" }
+          }
+        },
+        {
+          "name": "Remove from Cart",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/cart/remove/{{productId}}", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Clear Cart",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/cart/clear", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Place Order",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/orders",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"items\": [{\"product\": \"{{productId}}\", \"quantity\": 1}],\n  \"shippingAddress\": {\n    \"name\": \"John Doe\",\n    \"phone\": \"+91 9876543210\",\n    \"street\": \"123 Main St\",\n    \"city\": \"Mumbai\",\n    \"state\": \"Maharashtra\",\n    \"zipCode\": \"400001\",\n    \"country\": \"India\"\n  },\n  \"paymentMethod\": \"cod\"\n}" }
+          }
+        },
+        {
+          "name": "My Orders",
+          "request": { "method": "GET", "url": "{{baseUrl}}/orders/my", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Vendor Orders",
+          "request": { "method": "GET", "url": "{{baseUrl}}/orders/vendor", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Get Order By ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/orders/{{orderId}}", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Update Order Status (Vendor)",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/orders/{{orderId}}/status",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"status\": \"shipped\" }" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vendors",
+      "item": [
+        {
+          "name": "Get All Vendors",
+          "request": { "method": "GET", "url": "{{baseUrl}}/vendors" }
+        },
+        {
+          "name": "Get Vendor Profile",
+          "request": { "method": "GET", "url": "{{baseUrl}}/vendors/{{vendorId}}" }
+        },
+        {
+          "name": "Vendor Dashboard Stats",
+          "request": { "method": "GET", "url": "{{baseUrl}}/vendors/dashboard/stats", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Update Vendor Profile",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/vendors/profile/update",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"shopName\": \"Updated Shop Name\",\n  \"shopDescription\": \"Updated description\",\n  \"category\": \"Electronics\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Platform Stats",
+          "request": { "method": "GET", "url": "{{baseUrl}}/admin/stats", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "All Users",
+          "request": { "method": "GET", "url": "{{baseUrl}}/admin/users", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Toggle User Status",
+          "request": { "method": "PUT", "url": "{{baseUrl}}/admin/users/USER_ID/toggle", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "All Vendors",
+          "request": { "method": "GET", "url": "{{baseUrl}}/admin/vendors", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "Approve Vendor",
+          "request": { "method": "PUT", "url": "{{baseUrl}}/admin/vendors/{{vendorId}}/approve", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        },
+        {
+          "name": "All Orders",
+          "request": { "method": "GET", "url": "{{baseUrl}}/admin/orders", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Get Product Reviews",
+          "request": { "method": "GET", "url": "{{baseUrl}}/reviews/{{productId}}" }
+        },
+        {
+          "name": "Submit Review",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reviews/{{productId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 5,\n  \"title\": \"Excellent product!\",\n  \"comment\": \"Really happy with this purchase. Great quality!\"\n}" }
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/reviews/REVIEW_ID", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }] }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Server Health",
+          "request": { "method": "GET", "url": "{{baseUrl}}/health" }
+        }
+      ]
+    }
+  ]
+}

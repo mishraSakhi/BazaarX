@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "zhuangtongfa.material-theme",
+    "pkief.material-icon-theme",
+    "mongodb.mongodb-vscode",
+    "christian-kohler.path-intellisense",
+    "formulahendry.auto-rename-tag",
+    "dsznajder.es7-react-js-snippets",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-thunder-client",
+    "humao.rest-client",
+    "streetsidesoftware.code-spell-checker",
+    "burkeholland.simple-react-snippets",
+    "naumovs.color-highlight",
+    "oderwat.indent-rainbow"
+  ]
+}
